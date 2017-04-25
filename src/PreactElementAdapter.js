@@ -38,8 +38,8 @@ class PreactElementAdapter {
       delete copyProps.key;
     }
 
-    if (this._options.includeRefProp && element.ref) {
-      copyProps.ref = element.ref;
+    if (!this._options.includeRefProp) {
+      delete copyProps.ref;
     }
 
     if (typeof copyProps.className === 'string' && copyProps.class === undefined) {

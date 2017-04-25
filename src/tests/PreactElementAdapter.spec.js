@@ -80,7 +80,21 @@ describe('PreactElementAdapter', function () {
       );
     });
 
-    // TODO: ref specs (need to check how refs are supported in preact)
+    it('excludes a ref with default options', function () {
+      expect(adapter.getAttributes(<div ref={() => {}} className="foo">bar</div>),
+        'to equal',
+        { class: 'foo' }
+      );
+    });
+
+    it('includes a ref when includeRefProp is set', function () {
+      adapter.setOptions({ includeRefProp: true });
+      const refPropFn = () => {};
+      expect(adapter.getAttributes(<div ref={refPropFn} className="foo">bar</div>),
+        'to equal',
+        { class: 'foo', ref: refPropFn }
+      );
+    });
   });
 
   describe('getChildren', function () {
