@@ -1,10 +1,11 @@
-import Preact, { h, Component } from 'preact';
+import Preact, { createElement, Component } from 'preact-compat';
 import PreactElementAdapter from '../PreactElementAdapter';
 import unexpected from 'unexpected';
 import Immutable from 'immutable';
 
 const expect = unexpected.clone();
 
+const h = createElement;
 
 function StatelessComp({ className }) {
   return <div className="className">foo</div>;

@@ -27,14 +27,16 @@ class PreactElementAdapter {
       return element.nodeName;
     }
 
-    return element.nodeName.displayName || element.nodeName.name || 'no-display-name';
+    // element.type is for preact-compat
+    return (typeof element.type === 'function' && element.type.prototype && element.type.prototype.displayName) ||
+      element.nodeName.displayName || element.nodeName.name || 'no-display-name';
   }
 
   getAttributes(element) {
 
     const copyProps = ObjectAssign({}, element.attributes);
 
-    if (!this._options.includeKeyProp && copyProps.hasOwnProperty('key')) {
+    if (!this._options.includeKeyProp) {
       delete copyProps.key;
     }
 
@@ -45,6 +47,11 @@ class PreactElementAdapter {
     if (typeof copyProps.className === 'string' && copyProps.class === undefined) {
       copyProps.class = copyProps.className;
       delete copyProps.className;
+    }
+
+    // preact-compat generates a `children` prop
+    if (copyProps.children) {
+      delete copyProps.children;
     }
 
     return copyProps;
