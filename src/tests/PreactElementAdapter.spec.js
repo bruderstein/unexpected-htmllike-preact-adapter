@@ -107,6 +107,18 @@ describe('PreactElementAdapter', function () {
       const firstChild = adapter.getChildren(rootNode)[0];
       expect(adapter.getAttributes(firstChild), 'to equal', { class: 'foo' });
     });
+
+    it('returns the expect.it from a className attribute assertion', function () {
+
+      const rootNode = (
+        <div className={expect.it('to equal', 'foo')}>bar</div>
+      );
+
+      expect(adapter.getAttributes(rootNode), 'to satisfy', {
+        class: expect.it('to be an', 'expect.it')
+      });
+    });
+
   });
 
   describe('getChildren', function () {

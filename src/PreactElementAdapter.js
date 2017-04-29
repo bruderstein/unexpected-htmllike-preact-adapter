@@ -44,7 +44,7 @@ class PreactElementAdapter {
       delete copyProps.ref;
     }
 
-    if (typeof copyProps.className === 'string' && copyProps.class === undefined) {
+    if (copyProps.hasOwnProperty('className')) {
       copyProps.class = copyProps.className;
       delete copyProps.className;
     }
